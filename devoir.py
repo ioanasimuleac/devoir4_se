@@ -1,6 +1,3 @@
-#Simuleac Ioana-Veronica
-
-
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
 import cgi
@@ -71,7 +68,7 @@ class myHandler(BaseHTTPRequestHandler):
                self.end_headers()
                self.wfile.write(f.read())
                f.close()
-          return
+               #return
 
      except IOError:
           self.send_error(404,'File Not Found: %s' % self.path)
@@ -85,31 +82,26 @@ class myHandler(BaseHTTPRequestHandler):
                          'CONTENT_TYPE':self.headers['Content-Type'],
                              })
 
+     text_cryt = codcaesar(3,form["le_texte"].value)
      self.nsa_queue.put(form["le_texte"].value[::-1])
+     nou = "".join(nou_text)#modifie la list
      print "Le texte en clair: %s" % form["le_texte"].value
      self.send_response(200)
      self.end_headers()
-     """" codul pt criptare """
-     for i in range (0, 26):
-          self.wfile.write("Cod: " + str(i) + "  ")
-          codcaesar(le_texte,2) #le cryptage du text
-          nou = "".join(nou_text)#modifie la list
-          self.wfile.write( nou + '</br>') 
-     return              
+     
+     self.wfile.write( nou + '</br>') 
+          
+    return              
 
      if self.path=="/decrypt":
           le_texte = self.nsa_queue.get()
+          decryt = decodcaesar(3,le_texte)
           print "Le texte en encode: %s" % le_texte
           self.send_response(200)
           self.end_headers()
-          """
-          codul pt decpdare
-          """
-     for i in range (0, 26):
-          self.wfile.write("Decod: " + str(i) + "  ")
-          decodcaesar(le_texte,2)#decryptage
-          nou2 = "".join(nou1_text)#la form de la list
-          self.wfile.write(nou2 + '</br>')
+          self.wfile.write("le test initial" %le_texte)
+          self.wfile.write("le test decode" %decryt)
+         
      return
       
 try:
