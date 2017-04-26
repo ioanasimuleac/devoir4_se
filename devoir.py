@@ -92,9 +92,9 @@ class myHandler(BaseHTTPRequestHandler):
      """" codul pt criptare """
      for i in range (0, 26):
           self.wfile.write("Cod: " + str(i) + "  ")
-          codcaesar(form["le_texte"].value,i)
-          nou = "".join(nou_text)
-          self.wfile.write( nou + '</br>')
+          codcaesar(le_texte,2) #le cryptage du text
+          nou = "".join(nou_text)#modifie la list
+          self.wfile.write( nou + '</br>') 
      return              
 
      if self.path=="/decrypt":
@@ -107,8 +107,8 @@ class myHandler(BaseHTTPRequestHandler):
           """
      for i in range (0, 26):
           self.wfile.write("Decod: " + str(i) + "  ")
-          decodcaesar(le_texte,i)
-          nou2 = "".join(nou1_text)
+          decodcaesar(le_texte,2)#decryptage
+          nou2 = "".join(nou1_text)#la form de la list
           self.wfile.write(nou2 + '</br>')
      return
       
